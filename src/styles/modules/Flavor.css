@@ -1,0 +1,25 @@
+::-webkit-scrollbar {
+	width: 16px;
+}
+
+::-webkit-scrollbar-thumb {
+	@apply rounded-full border-4 border-solid border-transparent bg-zinc-300 bg-clip-padding dark:bg-zinc-800;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	@apply bg-zinc-400 dark:bg-zinc-700;
+}
+
+.magicHero {
+	animation: gradient 2s infinite linear;
+	@apply bg-gradient-to-r from-cyan-500 via-emerald-500 to-cyan-500 bg-[length:200%] bg-clip-text text-transparent;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0%;
+	}
+	100% {
+		background-position: 200%;
+	}
+}

@@ -1,3 +1,18 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import './modules/Buttons.css';
+@import './modules/Container.css';
+@import './modules/Input.css';
+@import './modules/Flavor.css';
+@import './modules/Menu.css';
+@import './modules/Text.css';
+
+* {
+	@apply text-black outline-none dark:text-white;
+}
+
+body {
+	@apply bg-white font-medium text-zinc-900 dark:bg-zinc-950 dark:text-white;
+}

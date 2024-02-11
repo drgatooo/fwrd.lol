@@ -1,0 +1,15 @@
+menu {
+	@apply absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-500 rounded-md border border-black/20 dark:border-white/20 dark:bg-zinc-900;
+
+	& button {
+		@apply flex w-full items-center justify-start gap-2 rounded-md px-2 py-2 text-sm;
+	}
+}
+
+.mainmenu {
+	&[data-headlessui-state='open'] {
+		& > button {
+			@apply bg-zinc-100 dark:bg-zinc-800;
+		}
+	}
+}

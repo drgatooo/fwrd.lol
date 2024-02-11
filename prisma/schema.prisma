@@ -35,14 +35,16 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid()) @map("_id")
-    name          String?
-    email         String?   @unique
+    id            String        @id @default(cuid()) @map("_id")
+    name          String
+    email         String        @unique
     emailVerified DateTime?
     image         String?
-    premium       Boolean   @default(false)
+    premium       Boolean       @default(false)
     accounts      Account[]
     sessions      Session[]
+    links         Link[]
+    accessTokens  AccessToken[]
 }
 
 model VerificationToken {
@@ -52,4 +54,25 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Link {
+    id          String   @id @default(cuid()) @map("_id")
+    alias       String   @unique
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    description String?
+    url         String
+    creatorId   String
+    creator     User     @relation(fields: [creatorId], references: [id])
+}
+
+model AccessToken {
+    id          String   @id @default(cuid()) @map("_id")
+    accessToken String   @unique
+    userId      String
+    expires     DateTime
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    user        User     @relation(fields: [userId], references: [id])
 }
