@@ -6,7 +6,7 @@ export function isValidURL(url: string): boolean {
 	return pattern.test(url);
 }
 
-export function isValidSlug(code: string): boolean {
+export function isValidAlias(code: string): boolean {
 	const originalEmojiRegex = emojiRegex();
 	const onlyEmojis = new RegExp(
 		// eslint-disable-next-line @typescript-eslint/no-base-to-string

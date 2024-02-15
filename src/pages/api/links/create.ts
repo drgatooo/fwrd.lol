@@ -1,7 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { isValidSlug, isValidURL } from '@/utils/validators';
+import { isValidAlias, isValidURL } from '@/utils/validators';
 import { getUser } from '@/lib/auth/api';
 import prisma from '@/lib/prisma';
+
+// banned aliases and URLs
+import restrictedAliases from '@/constants/restrictedAliases.json';
+import restrictedURLs from '@/constants/restrictedURLs.json';
 
 interface Data {
 	message: string;
@@ -25,8 +29,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 		return res.status(400).json({ message: 'La URL no es válida.' });
 	}
 
-	if (!isValidSlug(alias)) {
+	if (!isValidAlias(alias)) {
 		return res.status(400).json({ message: 'El alias no es válido.' });
+	}
+
+	if (restrictedAliases.includes(alias)) {
+		return res.status(400).json({ message: 'El alias no está permitido.' });
+	}
+
+	if (restrictedURLs.some(bannedURL => url.toLowerCase().includes(bannedURL))) {
+		return res.status(400).json({ message: 'La URL no está permitida.' });
 	}
 
 	if (description && description.lengh >= 250) {

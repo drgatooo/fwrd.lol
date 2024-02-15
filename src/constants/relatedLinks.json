@@ -1,0 +1,26 @@
+{
+	"/new": [
+		{
+			"name": "Mis enlaces",
+			"href": "/dashboard"
+		},
+		{
+			"name": "Crear código QR",
+			"href": "/createqr"
+		}
+	],
+	"/dashboard": [
+		{
+			"name": "Acortar enlace",
+			"href": "/new"
+		},
+		{
+			"name": "Gestionar mi enlace de perfil",
+			"href": "/linkinbio"
+		},
+		{
+			"name": "Mi cuenta",
+			"href": "/account"
+		}
+	]
+}

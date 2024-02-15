@@ -11,10 +11,10 @@ interface NavUserLoggedProps {
 
 export function NavUserLogged({ session: { data } }: NavUserLoggedProps) {
 	return (
-		<Menu as={'div'} className={'mainmenu relative'}>
-			<Menu.Button data-c data-color={'default'} data-v={'solid'} name={'Opciones de usuario'}>
+		<Menu as={'div'} className={'mainmenu relative z-[100]'}>
+			<Menu.Button data-c data-v={'ghost'} data-color={'default'} name={'Opciones de usuario'}>
 				<MdTag />
-				<span className={'max-w-16 truncate md:max-w-min'}>
+				<span className={'max-w-16 truncate text-inherit md:max-w-min'}>
 					{data?.user?.name?.split(' ').slice(0, 1)[0]}
 				</span>
 			</Menu.Button>

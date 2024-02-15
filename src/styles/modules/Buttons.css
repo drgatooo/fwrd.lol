@@ -8,52 +8,82 @@ button[data-c='true'] {
 	&[data-v='solid'] {
 		@apply text-black dark:text-white;
 		&[data-color='default'] {
-			@apply bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-900 dark:hover:bg-zinc-800;
+			@apply bg-zinc-900 text-white dark:bg-zinc-100 dark:text-black;
+			&:hover:not(:disabled) {
+				@apply bg-zinc-800 dark:bg-zinc-300;
+			}
 		}
 		&[data-color='emerald'] {
-			@apply bg-emerald-600 hover:bg-emerald-500;
+			@apply bg-emerald-600;
+			&:hover:not(:disabled) {
+				@apply bg-emerald-500;
+			}
 		}
 		&[data-color='rose'] {
-			@apply bg-rose-600 hover:bg-rose-500;
+			@apply bg-rose-600;
+			&:hover:not(:disabled) {
+				@apply bg-rose-500;
+			}
 		}
 		&[data-color='indigo'] {
-			@apply bg-indigo-600 hover:bg-indigo-500;
+			@apply bg-indigo-600;
+			&:hover:not(:disabled) {
+				@apply bg-indigo-500;
+			}
 		}
 		&[data-color='yellow'] {
-			@apply bg-yellow-600 hover:bg-yellow-500;
+			@apply bg-yellow-600;
+			&:hover:not(:disabled) {
+				@apply bg-yellow-500;
+			}
 		}
 	}
 	&[data-v='outline'] {
 		&[data-color='default'] {
-			@apply border border-black hover:bg-black/10  dark:border-white  dark:hover:bg-white/10;
+			@apply border border-black dark:border-white;
+			&:hover:not(:disabled) {
+				@apply bg-black/10 dark:bg-white/10;
+			}
 		}
 		&[data-color='emerald'] {
-			@apply border border-emerald-500 hover:bg-emerald-500/20;
+			@apply border border-emerald-500;
+			&:hover:not(:disabled) {
+				@apply bg-emerald-500/20;
+			}
 		}
 		&[data-color='rose'] {
-			@apply border border-rose-500 hover:bg-rose-500/20;
+			@apply border border-rose-500;
+			&:hover:not(:disabled) {
+				@apply bg-rose-500/20;
+			}
 		}
 		&[data-color='indigo'] {
-			@apply border border-indigo-500 hover:bg-indigo-500/20;
+			@apply border border-indigo-500;
+			&:hover:not(:disabled) {
+				@apply bg-indigo-500/20;
+			}
 		}
 		&[data-color='yellow'] {
-			@apply border border-yellow-500 hover:bg-yellow-500/20;
+			@apply border border-yellow-500;
+			&:hover:not(:disabled) {
+				@apply bg-yellow-500/20;
+			}
 		}
 	}
 	&[data-v='ghost'] {
-		&[data-color='default'] {
-			@apply hover:bg-black/10   dark:hover:bg-white/10;
+		&[data-color='default']:not(:disabled) {
+			@apply hover:bg-black/10 dark:hover:bg-white/10;
 		}
-		&[data-color='emerald'] {
+		&[data-color='emerald']:not(:disabled) {
 			@apply hover:bg-emerald-500/20;
 		}
-		&[data-color='rose'] {
+		&[data-color='rose']:not(:disabled) {
 			@apply hover:bg-rose-500/20;
 		}
-		&[data-color='indigo'] {
+		&[data-color='indigo']:not(:disabled) {
 			@apply hover:bg-indigo-500/20;
 		}
-		&[data-color='yellow'] {
+		&[data-color='yellow']:not(:disabled) {
 			@apply hover:bg-yellow-500/20;
 		}
 	}

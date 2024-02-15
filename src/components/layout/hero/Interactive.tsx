@@ -8,33 +8,49 @@ import { useRouter } from 'next/router';
 
 export function HeroInteractive() {
 	const { status } = useSession();
-	const [loading, { on, off }] = useBoolean(true);
+	const [loading, { on, off }] = useBoolean(false);
 	const router = useRouter();
 
 	useEffect(() => {
 		if (status == 'loading') on();
 		else off();
-	}, [status, on, off]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [status]);
 
 	return (
 		<div className={'flex w-full justify-center'}>
-			<Button
-				color={'default'}
-				variant={'outline'}
-				leftIcon={status !== 'authenticated' ? <GoogleIcon /> : <MdOutlineDashboard />}
-				loading={loading}
-				loadingMessage={'Cargando...'}
-				onClick={() => {
-					if (status !== 'authenticated') {
-						on();
-						void signIn('google');
-					} else {
+			{status !== 'authenticated' ? (
+				<LoginButton loading={loading} on={on} />
+			) : (
+				<Button
+					color={'default'}
+					variant={'outline'}
+					leftIcon={<MdOutlineDashboard />}
+					onClick={() => {
 						void router.push('/dashboard');
-					}
-				}}
-			>
-				<span>{status !== 'authenticated' ? 'Accede con Google' : 'Ver mis enlaces'}</span>
-			</Button>
+					}}
+				>
+					Ver mis enlaces
+				</Button>
+			)}
 		</div>
+	);
+}
+
+function LoginButton({ loading, on }: { loading: boolean; on: () => void }) {
+	return (
+		<Button
+			color={'default'}
+			variant={'outline'}
+			leftIcon={<GoogleIcon />}
+			loading={loading}
+			loadingMessage={'Cargando...'}
+			onClick={() => {
+				on();
+				void signIn('google');
+			}}
+		>
+			<span>Accede con Google</span>
+		</Button>
 	);
 }

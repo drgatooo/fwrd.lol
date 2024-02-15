@@ -1,5 +1,6 @@
 ::-webkit-scrollbar {
 	width: 16px;
+	background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
