@@ -24,6 +24,7 @@ export function Input({
 				<input
 					data-c
 					data-invalid={invalid}
+					data-icon={rightIcon ? 'true' : 'false'}
 					className={'peer'}
 					name={name}
 					id={name}

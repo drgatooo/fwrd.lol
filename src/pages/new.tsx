@@ -1,4 +1,3 @@
-import { signIn, useSession } from 'next-auth/react';
 import type { GetServerSideProps } from 'next';
 import { Layout } from '@/components/layout';
 import { RelatedLinks } from '@/components/utils';
@@ -8,8 +7,6 @@ import { getSession } from '@/utils/auth';
 import prisma from '@/lib/prisma';
 
 export default function New({ linkCount, isPremium }: NewProps) {
-	useSession({ required: true, onUnauthenticated: () => signIn('google') });
-
 	return (
 		<Layout
 			metadata={{
@@ -32,7 +29,7 @@ export const getServerSideProps = (async ({ req, res }) => {
 	const session = await getSession({ req, res });
 
 	if (!session?.user) {
-		return { props: { isPremium: false, linkCount: 0 } };
+		return { redirect: { destination: '/' } };
 	}
 
 	const user = await prisma.user.findUnique({
@@ -46,7 +43,7 @@ export const getServerSideProps = (async ({ req, res }) => {
 			isPremium: user?.premium ?? false
 		}
 	};
-}) satisfies GetServerSideProps<NewProps>;
+}) as GetServerSideProps<NewProps>;
 
 interface NewProps {
 	linkCount: number;

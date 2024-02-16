@@ -4,7 +4,7 @@ import { kv } from '@vercel/kv';
 
 const rateLimit = new Ratelimit({
 	redis: kv,
-	limiter: Ratelimit.slidingWindow(2, '10s')
+	limiter: Ratelimit.slidingWindow(5, '30s')
 });
 
 export async function handleRateLimit(req: NextRequest) {
@@ -12,12 +12,16 @@ export async function handleRateLimit(req: NextRequest) {
 	const [ip] = forwarded?.split(/, /) ?? ['127.0.0.1'];
 	console.log(ip);
 
-	const { limit, reset, remaining } = await rateLimit.limit(ip, { geo: req.geo });
-	console.log({ limit, reset, remaining });
+	const { limit, reset, remaining } = await rateLimit.limit(ip);
+	console.log({ limit, reset, remaining, geo: req.geo });
 
 	if (remaining < 1) {
-		return Response.json(
-			{ message: 'Rate limit exceeded' },
+		const seconds = Math.ceil((reset - Date.now()) / 1000);
+
+		return NextResponse.json(
+			{
+				message: `Estás siendo limitado. Intenta en ${seconds} segundos.`
+			},
 			{
 				status: 429,
 				headers: {
@@ -30,5 +34,5 @@ export async function handleRateLimit(req: NextRequest) {
 		);
 	}
 
-	return NextResponse.next();
+	return false;
 }

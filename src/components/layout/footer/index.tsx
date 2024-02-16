@@ -8,7 +8,7 @@ export function Footer() {
 			}
 		>
 			<span>Hecho por drgato</span>
-			<ul className={'flex flex-wrap gap-5'}>
+			<ul className={'flex flex-wrap items-center justify-center gap-5 text-center'}>
 				<li>
 					<Link href={'/report'}>Reportar</Link>
 				</li>

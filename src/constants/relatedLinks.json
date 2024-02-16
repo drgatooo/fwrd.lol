@@ -22,5 +22,15 @@
 			"name": "Mi cuenta",
 			"href": "/account"
 		}
+	],
+	"/edit/[id]": [
+		{
+			"name": "Acortar nuevo enlace",
+			"href": "/new"
+		},
+		{
+			"name": "Convertir a QR",
+			"href": "/createqr?text=:url"
+		}
 	]
 }

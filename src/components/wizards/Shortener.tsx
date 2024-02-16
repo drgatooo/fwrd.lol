@@ -10,8 +10,18 @@ interface ShortenerWizardProps {
 
 export function Shortener({ linkCount, isPremium }: ShortenerWizardProps) {
 	const { customAlias, description, longUrl, set, submit, submitting } = useCreateLinkForm();
+
 	const isInvalidURL = !!longUrl.length && !isValidURL(longUrl);
 	const isInvalidAlias = !!customAlias.length && !isValidAlias(customAlias);
+
+	const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (
+			e.key == 'Enter' &&
+			!(isInvalidURL || isInvalidAlias || submitting || !longUrl.length || !customAlias.length)
+		) {
+			void submit();
+		}
+	};
 
 	return (
 		<div className={'flex flex-col gap-5'}>
@@ -24,6 +34,7 @@ export function Shortener({ linkCount, isPremium }: ShortenerWizardProps) {
 					type={'url'}
 					name={'url'}
 					invalid={isInvalidURL}
+					onKeyDown={handleEnter}
 					message={
 						isInvalidURL
 							? 'El enlace es inválido.'
@@ -46,6 +57,7 @@ export function Shortener({ linkCount, isPremium }: ShortenerWizardProps) {
 					label={'Dominio (próximamente)'}
 					required
 					name={'url'}
+					onKeyDown={handleEnter}
 					rightIcon={<MdLock />}
 				/>
 				<Input
@@ -55,7 +67,9 @@ export function Shortener({ linkCount, isPremium }: ShortenerWizardProps) {
 					required
 					name={'alias'}
 					invalid={isInvalidAlias}
+					onKeyDown={handleEnter}
 					message={isInvalidAlias ? 'El alias es inválido.' : ''}
+					maxLength={16}
 				/>
 			</div>
 			<div className={'flex w-full'}>

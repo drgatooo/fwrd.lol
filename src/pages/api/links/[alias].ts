@@ -3,6 +3,7 @@ import type { Link } from '@prisma/client';
 import { getUser } from '@/lib/auth/api';
 import { isValidURL } from '@/utils/validators';
 import prisma from '@/lib/prisma';
+import restrictedURLs from '@/constants/restrictedURLs.json';
 
 interface Data {
 	message: string;
@@ -28,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
 		const existingSlug = await prisma.link.findUnique({
 			where: { alias: alias.toString() },
-			select: { alias: true }
+			select: { alias: true, url, description }
 		});
 
 		if (!existingSlug) {
@@ -37,6 +38,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
 		if (!isValidURL(url)) {
 			return res.status(400).json({ message: 'La URL no es válida.' });
+		}
+
+		if (restrictedURLs.some(bannedURL => url.toLowerCase().includes(bannedURL))) {
+			return res.status(400).json({ message: 'La URL no está permitida.' });
+		}
+
+		if (existingSlug.url == url && existingSlug.description == description) {
+			return res.status(400).json({ message: 'No se detectaron cambios.' });
 		}
 
 		if (description && description.lengh >= 250) {

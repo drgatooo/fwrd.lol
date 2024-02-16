@@ -64,6 +64,7 @@ model Link {
     description String?
     url         String
     creatorId   String
+    visits      Int      @default(0)
     creator     User     @relation(fields: [creatorId], references: [id])
 }
 

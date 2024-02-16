@@ -1,10 +1,11 @@
-import type { NextRequest } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { handleRateLimit } from '@/middleware/rateLimit';
 
 export const middleware = async (req: NextRequest) => {
-	await handleRateLimit(req);
+	const rateLimit = await handleRateLimit(req);
+	return rateLimit || NextResponse.next();
 };
 
 export const config = {
-	matcher: '/api/:path*'
+	matcher: '/api/((?!auth).*)'
 };

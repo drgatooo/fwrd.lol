@@ -1,5 +1,5 @@
 button[data-c='true'] {
-	@apply flex max-w-max items-center justify-center gap-2 rounded-xl px-3 py-2 font-semibold transition;
+	@apply flex max-w-max items-center justify-center gap-2 rounded-2xl px-3 py-1.5 font-semibold transition;
 
 	&:disabled {
 		@apply cursor-not-allowed opacity-70;
@@ -11,6 +11,10 @@ button[data-c='true'] {
 			@apply bg-zinc-900 text-white dark:bg-zinc-100 dark:text-black;
 			&:hover:not(:disabled) {
 				@apply bg-zinc-800 dark:bg-zinc-300;
+			}
+
+			& > svg {
+				@apply fill-white dark:fill-black;
 			}
 		}
 		&[data-color='emerald'] {
@@ -40,7 +44,7 @@ button[data-c='true'] {
 	}
 	&[data-v='outline'] {
 		&[data-color='default'] {
-			@apply border border-black dark:border-white;
+			@apply border-2 border-black dark:border-white;
 			&:hover:not(:disabled) {
 				@apply bg-black/10 dark:bg-white/10;
 			}

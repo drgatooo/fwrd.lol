@@ -25,6 +25,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 		return res.status(401).json({ message: 'No puedes realizar esta acción.' });
 	}
 
+	if (alias.lengh > 16) {
+		return res.status(400).json({ message: 'El alias no puede tener más de 16 caracteres.' });
+	}
+
 	if (!isValidURL(url)) {
 		return res.status(400).json({ message: 'La URL no es válida.' });
 	}

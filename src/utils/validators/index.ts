@@ -2,8 +2,7 @@ import emojiRegex from 'emoji-regex';
 
 export function isValidURL(url: string): boolean {
 	const pattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
-
-	return pattern.test(url);
+	return !!url.length && pattern.test(url);
 }
 
 export function isValidAlias(code: string): boolean {
@@ -15,5 +14,5 @@ export function isValidAlias(code: string): boolean {
 
 	const alphaRegex = /^[a-zA-Z0-9_-]+$/;
 
-	return alphaRegex.test(code) || onlyEmojis.test(code);
+	return !!code.length && (alphaRegex.test(code) || onlyEmojis.test(code));
 }
