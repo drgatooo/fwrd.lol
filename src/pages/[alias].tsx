@@ -18,10 +18,7 @@ export const getServerSideProps = (async ({ params }) => {
 
 	if (!link) {
 		return {
-			redirect: {
-				destination: '/',
-				permanent: false
-			}
+			notFound: true
 		};
 	}
 

@@ -38,11 +38,11 @@ export function NavUserLogged({ session: { data } }: NavUserLoggedProps) {
 						</MenuItem>
 					</div>
 					<div className="px-1 py-1">
-						<MenuItem href={'/link-in-bio'}>
+						<MenuItem href={'/linkinbio'}>
 							<MdPalette />
 							Link-in-bio
 						</MenuItem>
-						<MenuItem href={'/create-qr'}>
+						<MenuItem href={'/createqr'}>
 							<MdQrCode />
 							Código QR
 						</MenuItem>

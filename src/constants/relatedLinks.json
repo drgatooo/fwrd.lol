@@ -30,7 +30,17 @@
 		},
 		{
 			"name": "Convertir a QR",
-			"href": "/createqr?text=:url"
+			"href": "/createqr?input=:url"
+		}
+	],
+	"/createqr": [
+		{
+			"name": "Acortar nuevo enlace",
+			"href": "/new"
+		},
+		{
+			"name": "Gestionar mi enlace de perfil",
+			"href": "/linkinbio"
 		}
 	]
 }

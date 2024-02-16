@@ -13,32 +13,33 @@ button[data-c='true'] {
 				@apply bg-zinc-800 dark:bg-zinc-300;
 			}
 
-			& > svg {
+			& > svg,
+			& > .spinner > .line {
 				@apply fill-white dark:fill-black;
 			}
 		}
 		&[data-color='emerald'] {
-			@apply bg-emerald-600;
+			@apply bg-emerald-500;
 			&:hover:not(:disabled) {
-				@apply bg-emerald-500;
+				@apply bg-emerald-600;
 			}
 		}
 		&[data-color='rose'] {
-			@apply bg-rose-600;
+			@apply bg-rose-500;
 			&:hover:not(:disabled) {
-				@apply bg-rose-500;
+				@apply bg-rose-600;
 			}
 		}
 		&[data-color='indigo'] {
-			@apply bg-indigo-600;
+			@apply bg-indigo-500;
 			&:hover:not(:disabled) {
-				@apply bg-indigo-500;
+				@apply bg-indigo-600;
 			}
 		}
 		&[data-color='yellow'] {
-			@apply bg-yellow-600;
+			@apply bg-yellow-500;
 			&:hover:not(:disabled) {
-				@apply bg-yellow-500;
+				@apply bg-yellow-600;
 			}
 		}
 	}
