@@ -1,3 +1,5 @@
+import crypto from 'crypto';
+
 export function classNames(...classes: string[]): string {
 	return classes.filter(Boolean).join(' ');
 }
@@ -5,4 +7,8 @@ export function classNames(...classes: string[]): string {
 export function favicon(url: string) {
 	const domain = new URL(url).hostname;
 	return `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+}
+
+export function createRandomAccessToken() {
+	return crypto.randomBytes(32).toString('hex');
 }

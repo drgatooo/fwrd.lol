@@ -19,7 +19,7 @@ export function useEditLinkForm(
 	async function submit() {
 		setSubmit();
 		const msg = await axios
-			.post(`/api/links/${linkId}`, {
+			.patch(`/api/links/${linkId}`, {
 				url: longUrl,
 				description: description.length > 0 ? description : undefined
 			})

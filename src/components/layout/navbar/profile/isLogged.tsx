@@ -1,4 +1,12 @@
-import { MdCreate, MdDashboard, MdLogout, MdPalette, MdQrCode, MdTag } from 'react-icons/md';
+import {
+	MdCreate,
+	MdDashboard,
+	MdLogout,
+	MdPalette,
+	MdPerson,
+	MdQrCode,
+	MdTag
+} from 'react-icons/md';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { MenuItem } from '@/components/utils';
@@ -48,6 +56,10 @@ export function NavUserLogged({ session: { data } }: NavUserLoggedProps) {
 						</MenuItem>
 					</div>
 					<div className="px-1 py-1">
+						<MenuItem href={'/account'}>
+							<MdPerson />
+							Mi cuenta
+						</MenuItem>
 						<MenuItem onClick={() => signOut()}>
 							<MdLogout /> Cerrar sesión
 						</MenuItem>

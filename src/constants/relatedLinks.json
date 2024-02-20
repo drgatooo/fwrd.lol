@@ -42,5 +42,15 @@
 			"name": "Gestionar mi enlace de perfil",
 			"href": "/linkinbio"
 		}
+	],
+	"/account": [
+		{
+			"name": "Gestionar mi enlace de perfil",
+			"href": "/linkinbio"
+		},
+		{
+			"name": "Mis enlaces",
+			"href": "/dashboard"
+		}
 	]
 }

@@ -1,0 +1,26 @@
+div[data-c='progressBar'] {
+	@apply mb-4 w-full rounded-full bg-gray-600/20;
+	& > div[data-c='progressBarFill'] {
+		@apply h-1.5 rounded-full transition;
+
+		&[data-color='default'] {
+			@apply bg-black dark:bg-white;
+		}
+
+		&[data-color='rose'] {
+			@apply bg-rose-500;
+		}
+
+		&[data-color='emerald'] {
+			@apply bg-emerald-500;
+		}
+
+		&[data-color='indigo'] {
+			@apply bg-indigo-500;
+		}
+
+		&[data-color='yellow'] {
+			@apply bg-yellow-500;
+		}
+	}
+}
