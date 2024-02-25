@@ -199,8 +199,6 @@ export const getServerSideProps = (async ({ req, res }) => {
 		}
 	});
 
-	console.log(user);
-
 	return {
 		props: { user: JSON.parse(JSON.stringify(user)) }
 	};

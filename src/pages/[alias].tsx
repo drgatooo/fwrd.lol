@@ -2,13 +2,15 @@ import type { GetServerSideProps } from 'next';
 import prisma from '@/lib/prisma';
 
 export const getServerSideProps = (async ({ params }) => {
-	const alias = params?.alias?.toString();
+	const raw_alias = params?.alias?.toString();
 
-	if (!alias?.length) {
+	if (!raw_alias?.length) {
 		return {
 			notFound: true
 		};
 	}
+
+	const alias = decodeURIComponent(raw_alias);
 
 	const link = await prisma.link.findUnique({
 		where: {

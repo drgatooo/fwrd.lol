@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 	const { alias } = req.query;
 
 	if (req.method == 'PATCH') {
-		const { url, description } = req.body;
+		const { url, description, toLIB, asSocial, label } = req.body;
 
 		if (!alias) {
 			return res.status(400).json({ message: 'Se necesita el alias del enlace a modificar.' });
@@ -52,6 +52,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 			return res
 				.status(400)
 				.json({ message: 'La descripción no puede tener más de 250 caracteres.' });
+		}
+
+		if (toLIB) {
+			if (!label) {
+				return res.status(400).json({ message: 'Se necesita una etiqueta para el enlace.' });
+			}
 		}
 
 		await prisma.link.update({

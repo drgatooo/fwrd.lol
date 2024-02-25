@@ -45,6 +45,30 @@ model User {
     sessions      Session[]
     links         Link[]
     accessTokens  AccessToken[]
+    linkInBio     LinkInBio?
+}
+
+model LinkInBio {
+    id          String      @id @default(cuid()) @map("_id")
+    userId      String      @unique
+    user        User        @relation(fields: [userId], references: [id])
+    description String?
+    palette     String[]
+    title       String?
+    buttonRound ButtonRound @default(none)
+    buttonStyle ButtonStyle @default(fill)
+}
+
+enum ButtonRound {
+    none
+    medium
+    full
+}
+
+enum ButtonStyle {
+    fill
+    outline
+    hardshadow
 }
 
 model VerificationToken {
@@ -66,6 +90,10 @@ model Link {
     creatorId   String
     visits      Int      @default(0)
     creator     User     @relation(fields: [creatorId], references: [id])
+
+    linkInBio   Boolean @default(false)
+    libAsSocial Boolean @default(false)
+    libLabel    String?
 }
 
 model AccessToken {
