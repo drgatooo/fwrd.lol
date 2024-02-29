@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { convertToValidAlias } from '@/utils/validators';
 import toast from 'react-hot-toast';
 import { useBoolean } from '.';
 import { useState } from 'react';
@@ -58,7 +59,7 @@ export function useCreateLinkForm() {
 				break;
 			}
 			case 'alias': {
-				setCustomAlias(value);
+				setCustomAlias(convertToValidAlias(value));
 				break;
 			}
 		}

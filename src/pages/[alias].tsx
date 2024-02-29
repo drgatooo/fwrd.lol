@@ -1,4 +1,5 @@
 import type { GetServerSideProps } from 'next';
+import { convertToValidAlias } from '@/utils/validators';
 import prisma from '@/lib/prisma';
 
 export const getServerSideProps = (async ({ params }) => {
@@ -10,7 +11,8 @@ export const getServerSideProps = (async ({ params }) => {
 		};
 	}
 
-	const alias = decodeURIComponent(raw_alias);
+	const alias = convertToValidAlias(raw_alias);
+	console.log(alias);
 
 	const link = await prisma.link.findUnique({
 		where: {
