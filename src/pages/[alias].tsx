@@ -38,7 +38,9 @@ export const getServerSideProps = (async ({ params }) => {
 		return {
 			props: {
 				data: JSON.parse(JSON.stringify(user)),
-				links: JSON.parse(JSON.stringify(links))
+				links: JSON.parse(
+					JSON.stringify(links.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()))
+				)
 			}
 		};
 	}

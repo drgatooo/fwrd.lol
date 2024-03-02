@@ -55,11 +55,16 @@ export const getServerSideProps = (async ({ req, res }) => {
 
 	const links = await prisma.link.findMany({
 		where: { creatorId: user.id, inBio: true },
-		select: { alias: true, url: true, libLabel: true, asSocial: true }
+		select: { alias: true, url: true, libLabel: true, asSocial: true, createdAt: true }
 	});
 
 	return {
-		props: { config, links }
+		props: {
+			config,
+			links: JSON.parse(
+				JSON.stringify(links.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime()))
+			)
+		}
 	};
 }) as GetServerSideProps<LIBProps>;
 

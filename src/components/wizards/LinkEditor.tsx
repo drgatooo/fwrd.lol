@@ -55,6 +55,7 @@ export function LinkEditor({ link }: LinkEditorProps) {
 						label={'Etiqueta'}
 						name={'libLabel'}
 						maxLength={30}
+						required
 					/>
 					<Switch
 						checked={asSocial}
