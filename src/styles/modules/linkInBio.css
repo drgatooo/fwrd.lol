@@ -1,0 +1,51 @@
+[data-var='fill'] {
+	@apply border-none bg-[var(--c1)] p-2 text-center font-semibold text-[var(--c5)] transition hover:bg-[var(--c2)];
+	& svg {
+		@apply h-6 w-6 fill-[var(--c5)];
+	}
+}
+
+[data-var='outline'] {
+	@apply border-2 border-[var(--c1)] p-2 text-center font-semibold text-[var(--c4)] transition hover:border-[var(--c2)];
+	& svg {
+		@apply h-6 w-6 fill-[var(--c4)];
+	}
+}
+
+[data-var='hardshadow'] {
+	@apply border-none bg-[var(--c1)] p-2 text-center font-semibold text-[var(--c5)] shadow-hard shadow-[var(--c2)] transition hover:shadow-none hover:shadow-[var(--c2)];
+	& svg {
+		@apply h-6 w-6 fill-[var(--c5)];
+	}
+}
+
+[data-round='none'] {
+	@apply rounded-none;
+}
+
+[data-round='medium'] {
+	@apply rounded-md;
+}
+
+[data-round='full'] {
+	@apply rounded-full;
+}
+
+[data-islib='true'] {
+	& h1 {
+		@apply text-3xl font-black text-[var(--c1)];
+	}
+
+	& p,
+	& footer {
+		@apply text-[var(--c4)];
+	}
+
+	& a[data-btn='true'] {
+		@apply flex w-full items-center justify-center gap-2;
+	}
+
+	& a[data-social='true'] > svg {
+		@apply h-6 fill-[var(--c1)] transition hover:fill-[var(--c2)];
+	}
+}

@@ -1,4 +1,4 @@
-import type { ReqRes } from '@/types';
+import type { APIReqRes, ReqRes } from '@/types';
 import { getSession } from '@/utils/auth';
 import prisma from '../prisma';
 
@@ -30,4 +30,15 @@ export async function getUser({ token, req, res }: GetUserParams) {
 	}
 
 	return undefined;
+}
+
+export async function authenticate({ req, res }: APIReqRes) {
+	const token = req.headers.authorization;
+	const user = await getUser({ req, res, token });
+
+	if (!user) {
+		return res.status(401).json({ message: 'No puedes realizar esta acción.' });
+	}
+
+	return user;
 }

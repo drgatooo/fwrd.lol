@@ -39,7 +39,9 @@ export function Input({
 						{rightIcon}
 					</div>
 				) : null}
-				<p className={`mt-1.5 text-sm font-medium ${invalid ? 'text-red-500' : ''}`}>{message}</p>
+				{!!message?.length && (
+					<p className={`mt-1.5 text-sm font-medium ${invalid ? 'text-red-500' : ''}`}>{message}</p>
+				)}
 			</div>
 		</>
 	);

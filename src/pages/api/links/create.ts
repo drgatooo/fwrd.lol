@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { isValidAlias, isValidURL } from '@/utils/validators';
-import { getUser } from '@/lib/auth/api';
+import { authenticate } from '@/lib/auth/api';
 import prisma from '@/lib/prisma';
 
 // banned aliases and URLs
@@ -16,14 +16,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 		return res.status(405).json({ message: 'Method Not Allowed' });
 	}
 
-	const token = req.headers.authorization;
 	const { url, alias, description } = req.body;
 
-	const user = await getUser({ req, res, token });
-
-	if (!user) {
-		return res.status(401).json({ message: 'No puedes realizar esta acción.' });
-	}
+	const user = await authenticate({ req, res });
+	if (!user) return void 0;
 
 	if (alias.lengh > 16) {
 		return res.status(400).json({ message: 'El alias no puede tener más de 16 caracteres.' });

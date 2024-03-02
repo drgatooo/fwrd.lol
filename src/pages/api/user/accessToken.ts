@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { authenticate } from '@/lib/auth/api';
 import { generateKeySync } from 'crypto';
-import { getUser } from '@/lib/auth/api';
 import prisma from '@/lib/prisma';
 
 interface Data {
@@ -9,12 +9,10 @@ interface Data {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-	const token = req.headers.authorization;
-	const user = await getUser({ req, res, token });
+	const user = await authenticate({ req, res });
+	if (!user) return void 0;
 
-	if (!user) {
-		return res.status(401).json({ message: 'No puedes realizar esta acción.' });
-	}
+	const token = req.headers.authorization;
 
 	if (token) {
 		return res.status(405).json({ message: 'Method Not Allowed' });

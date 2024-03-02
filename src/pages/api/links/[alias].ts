@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { Link } from '@prisma/client';
-import { getUser } from '@/lib/auth/api';
+import { authenticate } from '@/lib/auth/api';
 import { isValidURL } from '@/utils/validators';
 import prisma from '@/lib/prisma';
 import restrictedURLs from '@/constants/restrictedURLs.json';
@@ -11,17 +11,13 @@ interface Data {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-	const token = req.headers.authorization;
-	const user = await getUser({ req, res, token });
-
-	if (!user) {
-		return res.status(401).json({ message: 'No puedes realizar esta acción.' });
-	}
+	const user = await authenticate({ req, res });
+	if (!user) return void 0;
 
 	const { alias } = req.query;
 
 	if (req.method == 'PATCH') {
-		const { url, description, toLIB, asSocial, label } = req.body;
+		const { url, description, inBio = false, asSocial = false, label } = req.body;
 
 		if (!alias) {
 			return res.status(400).json({ message: 'Se necesita el alias del enlace a modificar.' });
@@ -54,7 +50,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 				.json({ message: 'La descripción no puede tener más de 250 caracteres.' });
 		}
 
-		if (toLIB) {
+		if (inBio) {
 			if (!label) {
 				return res.status(400).json({ message: 'Se necesita una etiqueta para el enlace.' });
 			}
@@ -64,7 +60,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 			where: { alias: alias.toString() },
 			data: {
 				url,
-				description
+				description,
+				asSocial,
+				inBio,
+				libLabel: label ?? undefined
 			}
 		});
 

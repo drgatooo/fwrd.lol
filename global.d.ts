@@ -9,6 +9,7 @@ declare global {
 			readonly DATABASE_URL: string;
 			readonly GOOGLE_CLIENT_ID: string;
 			readonly GOOGLE_CLIENT_SECRET: string;
+			readonly IMGBB_KEY: string;
 		}
 	}
 }

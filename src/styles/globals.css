@@ -6,6 +6,7 @@
 @import './modules/Container.css';
 @import './modules/Input.css';
 @import './modules/Flavor.css';
+@import './modules/linkInBio.css';
 @import './modules/Menu.css';
 @import './modules/NProgress.css';
 @import './modules/ProgressBar.css';
@@ -17,5 +18,9 @@
 }
 
 body {
-	@apply overflow-x-hidden overflow-y-scroll bg-white font-medium text-zinc-900 dark:bg-zinc-950 dark:text-white;
+	@apply overflow-y-auto overflow-x-hidden bg-white font-medium text-zinc-900 transition dark:bg-zinc-950 dark:text-white;
+}
+
+hr {
+	@apply my-2 border-t border-zinc-400 dark:border-zinc-700;
 }

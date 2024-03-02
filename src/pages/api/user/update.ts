@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { authenticate, getUser } from '@/lib/auth/api';
 import type { User } from '@prisma/client';
-import { getUser } from '@/lib/auth/api';
 import prisma from '@/lib/prisma';
 
 interface Data {
@@ -9,14 +9,10 @@ interface Data {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+	const user = await authenticate({ req, res });
+	if (!user) return void 0;
+
 	if (req.method === 'PATCH') {
-		const token = req.headers.authorization;
-		const user = await getUser({ req, res, token });
-
-		if (!user) {
-			return res.status(401).json({ message: 'No puedes realizar esta acción.' });
-		}
-
 		const { name } = req.body;
 
 		if (!name) {
@@ -47,14 +43,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
 	if (req.method === 'DELETE') {
 		const token = req.headers.authorization;
-		const user = await getUser({ req, res, token });
-
-		if (token && user) {
+		if (token) {
 			return res.status(405).json({ message: 'Method Not Allowed' });
-		}
-
-		if (!user) {
-			return res.status(401).json({ message: 'No puedes realizar esta acción.' });
 		}
 
 		await prisma.link.deleteMany({ where: { creatorId: user.id } });

@@ -4,14 +4,24 @@ import { useBoolean } from '.';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-type LinkField = 'url' | 'description';
+type LinkField = 'url' | 'description' | 'inBio' | 'asSocial' | 'libLabel';
 
 export function useEditLinkForm(
 	linkId: string,
-	initial: { url: string; description?: string | null }
+	initial: {
+		url: string;
+		description?: string | null;
+		inBio?: boolean;
+		asSocial?: boolean;
+		libLabel?: string | null;
+	}
 ) {
 	const [longUrl, setLongUrl] = useState(initial.url);
 	const [description, setDescription] = useState(initial.description ?? '');
+	const [inBio, { toggle }] = useBoolean(initial.inBio ?? false);
+	const [asSocial, { toggle: toggleAsSocial }] = useBoolean(initial.asSocial ?? false);
+	const [libLabel, setLibLabel] = useState(initial.libLabel ?? '');
+
 	const [submitting, { off: unsetSubmit, on: setSubmit }] = useBoolean(false);
 
 	const router = useRouter();
@@ -21,7 +31,10 @@ export function useEditLinkForm(
 		const msg = await axios
 			.patch(`/api/links/${linkId}`, {
 				url: longUrl,
-				description: description.length > 0 ? description : undefined
+				description: description.length > 0 ? description : undefined,
+				inBio,
+				asSocial,
+				label: libLabel
 			})
 			.then(({ data }) => ({
 				success: data.message,
@@ -80,12 +93,30 @@ export function useEditLinkForm(
 				setDescription(value.slice(0, 250));
 				break;
 			}
+
+			case 'inBio': {
+				toggle();
+				break;
+			}
+
+			case 'asSocial': {
+				toggleAsSocial();
+				break;
+			}
+
+			case 'libLabel': {
+				setLibLabel(value);
+				break;
+			}
 		}
 	}
 
 	return {
 		longUrl,
 		description,
+		inBio,
+		asSocial,
+		libLabel,
 		set,
 		submit,
 		reset,

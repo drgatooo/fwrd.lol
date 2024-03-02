@@ -52,5 +52,15 @@
 			"name": "Mis enlaces",
 			"href": "/dashboard"
 		}
+	],
+	"/linkinbio": [
+		{
+			"name": "Acortar enlace",
+			"href": "/new"
+		},
+		{
+			"name": "Mi cuenta",
+			"href": "/account"
+		}
 	]
 }

@@ -1,0 +1,11 @@
+export { Discord } from './Discord';
+export { Facebook } from './Facebook';
+export { GitHub } from './GitHub';
+export { Gitlab } from './Gitlab';
+export { GoogleIcon } from './GoogleIcon';
+export { Instagram } from './Instagram';
+export { Linkedin } from './Linkedin';
+export { Spotify } from './Spotify';
+export { Tiktok } from './Tiktok';
+export { X } from './X';
+export { YouTube } from './YouTube';

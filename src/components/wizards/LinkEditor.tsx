@@ -1,4 +1,4 @@
-import { Button, Input, Textarea } from '../core';
+import { Button, Input, Switch, Textarea } from '../core';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import type { Link } from '@prisma/client';
 import { isValidURL } from '@/utils/validators';
@@ -9,13 +9,14 @@ interface LinkEditorProps {
 }
 
 export function LinkEditor({ link }: LinkEditorProps) {
-	const { longUrl, description, set, submit, submitting, deleteLink } = useEditLinkForm(
-		link.alias,
-		{
+	const { longUrl, description, inBio, asSocial, libLabel, set, submit, submitting, deleteLink } =
+		useEditLinkForm(link.alias, {
 			url: link.url,
-			description: link.description
-		}
-	);
+			description: link.description,
+			asSocial: link.asSocial,
+			inBio: link.inBio,
+			libLabel: link.libLabel
+		});
 	const isInvalidURL = !!longUrl.length && !isValidURL(longUrl);
 
 	return (
@@ -40,17 +41,44 @@ export function LinkEditor({ link }: LinkEditorProps) {
 				containerClassName={'mb-1.5'}
 			/>
 
+			<Switch
+				checked={inBio}
+				onChange={() => set('inBio', '')}
+				label={'Agregar a mi enlace de perfil'}
+			/>
+
+			{inBio && (
+				<div className={'flex flex-col gap-3 sm:flex-row'}>
+					<Input
+						value={libLabel}
+						onChange={e => set('libLabel', e.target.value)}
+						label={'Etiqueta'}
+						name={'libLabel'}
+						maxLength={30}
+					/>
+					<Switch
+						checked={asSocial}
+						onChange={() => set('asSocial', '')}
+						label={'Es enlace social'}
+					/>
+				</div>
+			)}
+
 			<div className={'flex gap-3'}>
 				<Button
 					loading={submitting}
 					leftIcon={<MdEdit />}
-					color={'yellow'}
 					onClick={submit}
 					disabled={
 						isInvalidURL ||
 						submitting ||
 						!longUrl.length ||
-						(longUrl == link.url && description == link.description)
+						(longUrl == link.url &&
+							description == link.description &&
+							inBio &&
+							inBio == link.inBio &&
+							libLabel == link.libLabel &&
+							asSocial == link.asSocial)
 					}
 				>
 					Editar

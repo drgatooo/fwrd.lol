@@ -55,6 +55,10 @@ model LinkInBio {
     description String?
     palette     String[]
     title       String?
+    image       String?
+    imageId     String?
+    footer      String?
+    username    String?
     buttonRound ButtonRound @default(none)
     buttonStyle ButtonStyle @default(fill)
 }
@@ -91,9 +95,9 @@ model Link {
     visits      Int      @default(0)
     creator     User     @relation(fields: [creatorId], references: [id])
 
-    linkInBio   Boolean @default(false)
-    libAsSocial Boolean @default(false)
-    libLabel    String?
+    inBio    Boolean @default(false)
+    asSocial Boolean @default(false)
+    libLabel String?
 }
 
 model AccessToken {

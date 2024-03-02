@@ -15,6 +15,9 @@ const config: Config = {
 			transitionTimingFunction: {
 				'in-out-expo': 'cubic-bezier(0.87, 0, 0.13, 1)',
 				'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)'
+			},
+			boxShadow: {
+				hard: '5px 5px 0px 0px'
 			}
 		}
 	},

@@ -21,3 +21,7 @@ export function isValidAlias(code: string): boolean {
 export function convertToValidAlias(code: string): string {
 	return code.replace(new RegExp(`[^${alphaRegex.source}${onlyEmojis.source}]`, 'g'), '');
 }
+
+export function convertToValidUsername(username: string): string {
+	return username.replace(/[^a-zA-Z0-9_]/g, '');
+}
