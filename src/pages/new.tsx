@@ -16,7 +16,7 @@ export default function New({ linkCount, isPremium }: NewProps) {
 		>
 			<h2 className={'mt-5'}>Nuevo enlace</h2>
 			<RelatedLinks />
-			{linkCount >= 20 && !isPremium ? (
+			{linkCount >= 30 && !isPremium ? (
 				<UnableToCreateLink />
 			) : (
 				<Shortener isPremium={isPremium} linkCount={linkCount} />

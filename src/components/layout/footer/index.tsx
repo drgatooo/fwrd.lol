@@ -10,10 +10,13 @@ export function Footer() {
 			<span>Hecho por drgato</span>
 			<ul className={'flex flex-wrap items-center justify-center gap-5 text-center'}>
 				<li>
-					<Link href={'/report'}>Reportar</Link>
+					<Link href={'mailto:hi@drgato.dev'}>Reportar</Link>
 				</li>
 				<li>
-					<Link href={'/policy'}>Política de privacidad</Link>
+					<Link href={'/privacy'}>Política de privacidad</Link>
+				</li>
+				<li>
+					<Link href={'/terms'}>Términos de servicio</Link>
 				</li>
 			</ul>
 		</footer>

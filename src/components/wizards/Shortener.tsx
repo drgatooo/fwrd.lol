@@ -38,7 +38,7 @@ export function Shortener({ linkCount, isPremium }: ShortenerWizardProps) {
 					message={
 						isInvalidURL
 							? 'El enlace es inválido.'
-							: `Puedes crear ${isPremium ? 'enlaces ilimitados.' : `${20 - linkCount} enlaces más.`}`
+							: `Puedes crear ${isPremium ? 'enlaces ilimitados.' : `${30 - linkCount} enlaces más.`}`
 					}
 				/>
 			</div>

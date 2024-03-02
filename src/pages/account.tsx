@@ -159,11 +159,11 @@ export default function MyAccount({ user }: AccountProps) {
 					Tienes <strong>{user.links.length}</strong> enlaces acortados.{' '}
 					{user.premium
 						? 'Al ser usuario premium, ¡puedes crear enlaces ilimitados!'
-						: `Te quedan ${20 - user.links.length} enlaces más para llegar al límite de tu cuenta.`}
+						: `Te quedan ${30 - user.links.length} enlaces más para llegar al límite de tu cuenta.`}
 				</p>
 				<Progress
-					progress={user.premium ? 0.9 : user.links.length / 20}
-					color={user.links.length / 20 > 0.8 ? 'rose' : 'default'}
+					progress={user.premium ? 0.9 : user.links.length / 30}
+					color={user.links.length / 30 > 0.8 ? 'rose' : 'default'}
 				/>
 			</div>
 

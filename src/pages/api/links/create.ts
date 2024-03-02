@@ -61,12 +61,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 			where: { creatorId: user.id }
 		});
 
-		if (linksCount >= 20) {
-			return res.status(400).json({ message: 'Has alcanzado el límite de 20 enlaces.' });
+		if (linksCount >= 30) {
+			return res.status(400).json({ message: 'Has alcanzado el límite de 30 enlaces.' });
 		}
 	}
 
-	const link = await prisma.link.create({
+	await prisma.link.create({
 		data: {
 			url,
 			alias,
