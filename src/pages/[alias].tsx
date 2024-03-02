@@ -99,6 +99,7 @@ export default function Page({ data, links }: { data: LIBConfig; links: Link[] }
 					<meta property="og:title" content={data.title} />
 					<meta property="og:description" content={data.description} />
 					<meta property="og:image" content={data.image} />
+					{data.image && <link rel="icon" href={data.image} />}
 				</Head>
 				<LIBContent data={data} links={links} />
 			</div>
