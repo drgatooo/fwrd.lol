@@ -1,25 +1,13 @@
-import { useEffect, useState } from 'react';
 import { DashboardLink } from '../cards';
 import type { DashboardProps } from '@/pages/dashboard';
-import Fuse from 'fuse.js';
 import { Input } from '../core';
 import { MdSearch } from 'react-icons/md';
 import { useRouter } from 'next/router';
+import { useSearchLinks } from '@/hooks';
 
-export function MyLinks({ user }: DashboardProps) {
-	const [query, setQuery] = useState('');
-	const [links, setLinks] = useState(user.links);
+export function LinkFinder({ user }: DashboardProps) {
+	const { links, query, search } = useSearchLinks(user.links);
 	const router = useRouter();
-
-	const fuse = new Fuse(user.links, {
-		keys: ['alias', 'url', 'description']
-	});
-
-	useEffect(() => {
-		const result = query.length ? fuse.search(query).map(link => link.item) : user.links;
-		setLinks(result);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [query]);
 
 	return (
 		<>
@@ -28,7 +16,7 @@ export function MyLinks({ user }: DashboardProps) {
 				label={'Busca tu enlace'}
 				name={'búsqueda'}
 				value={query}
-				onChange={e => setQuery(e.target.value)}
+				onChange={e => search(e.target.value)}
 				rightIcon={<MdSearch />}
 			/>
 

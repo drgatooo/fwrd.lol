@@ -8,21 +8,14 @@ interface LinkEditorProps {
 	link: Link;
 }
 
-export function LinkEditor({ link }: LinkEditorProps) {
-	const { longUrl, description, inBio, asSocial, libLabel, set, submit, submitting, deleteLink } =
-		useEditLinkForm(link.alias, {
-			url: link.url,
-			description: link.description,
-			asSocial: link.asSocial,
-			inBio: link.inBio,
-			libLabel: link.libLabel
-		});
-	const isInvalidURL = !!longUrl.length && !isValidURL(longUrl);
+export function LinkEditor({ link: data }: LinkEditorProps) {
+	const { set, submit, submitting, deleteLink, ...link } = useEditLinkForm(data.alias, data);
+	const isInvalidURL = !!link.longUrl.length && !isValidURL(link.longUrl);
 
 	return (
 		<>
 			<Input
-				value={longUrl}
+				value={link.longUrl}
 				onChange={e => set('url', e.target.value)}
 				label={'Nuevo enlace'}
 				required
@@ -33,24 +26,24 @@ export function LinkEditor({ link }: LinkEditorProps) {
 			/>
 
 			<Textarea
-				value={description}
+				value={link.description}
 				onChange={e => set('description', e.target.value)}
-				label={`Descripción (${description.length}/250)`}
+				label={`Descripción (${link.description.length}/250)`}
 				name={'description'}
 				maxLength={250}
 				containerClassName={'mb-1.5'}
 			/>
 
 			<Switch
-				checked={inBio}
+				checked={link.inBio}
 				onChange={() => set('inBio', '')}
 				label={'Agregar a mi enlace de perfil'}
 			/>
 
-			{inBio && (
+			{link.inBio && (
 				<div className={'flex flex-col gap-3 sm:flex-row'}>
 					<Input
-						value={libLabel}
+						value={link.libLabel}
 						onChange={e => set('libLabel', e.target.value)}
 						label={'Etiqueta'}
 						name={'libLabel'}
@@ -58,7 +51,7 @@ export function LinkEditor({ link }: LinkEditorProps) {
 						required
 					/>
 					<Switch
-						checked={asSocial}
+						checked={link.asSocial}
 						onChange={() => set('asSocial', '')}
 						label={'Es enlace social'}
 					/>
@@ -73,13 +66,13 @@ export function LinkEditor({ link }: LinkEditorProps) {
 					disabled={
 						isInvalidURL ||
 						submitting ||
-						!longUrl.length ||
-						(longUrl == link.url &&
-							description == link.description &&
-							inBio &&
-							inBio == link.inBio &&
-							libLabel == link.libLabel &&
-							asSocial == link.asSocial)
+						!link.longUrl.length ||
+						(link.longUrl == data.url &&
+							link.description == data.description &&
+							link.inBio &&
+							link.inBio == data.inBio &&
+							link.libLabel == data.libLabel &&
+							link.asSocial == data.asSocial)
 					}
 				>
 					Editar

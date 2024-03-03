@@ -5,8 +5,6 @@ import type { PartialLink } from '@/types';
 import { socialIcon } from '@/lib/socials';
 
 export function LIBContent({ data, links }: { data: LIBConfig; links: PartialLink[] }) {
-	const [primary, secondary, , text, altText] = data.palette;
-
 	return (
 		<>
 			{data.image && (
@@ -19,10 +17,8 @@ export function LIBContent({ data, links }: { data: LIBConfig; links: PartialLin
 				/>
 			)}
 			<div className={'flex flex-col items-center gap-1 text-center'}>
-				<h1 className={'text-3xl font-black'} style={{ color: primary }}>
-					{data.title}
-				</h1>
-				<p style={{ color: text }}>{data.description}</p>
+				<h1 className={'text-3xl font-black'}>{data.title}</h1>
+				<p>{data.description}</p>
 			</div>
 
 			<div className={'mt-3 flex w-full flex-col gap-3'}>
@@ -55,7 +51,6 @@ export function LIBContent({ data, links }: { data: LIBConfig; links: PartialLin
 								key={link.alias}
 								href={link.url}
 								target={'_blank'}
-								style={{ fill: primary }}
 							>
 								{icon}
 							</Link>

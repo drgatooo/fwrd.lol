@@ -2,7 +2,7 @@ import { Hint, RelatedLinks } from '@/components/utils';
 import type { GetServerSideProps } from 'next';
 import { Layout } from '@/components/layout';
 import type { Link } from '@prisma/client';
-import { MyLinks } from '@/components/wizards';
+import { LinkFinder } from '@/components/wizards';
 import { getSession } from '@/utils/auth';
 import prisma from '@/lib/prisma';
 import { useRouter } from 'next/router';
@@ -20,7 +20,7 @@ export default function Dashboard({ user }: DashboardProps) {
 			<h2 className={'mt-5'}>Mis enlaces</h2>
 			<RelatedLinks />
 			{router.query.from_lib && <Hint>Edita un enlace para agregarlo a tu enlace de perfil.</Hint>}
-			<MyLinks user={user} />
+			<LinkFinder user={user} />
 		</Layout>
 	);
 }

@@ -74,19 +74,30 @@ export const getServerSideProps = (async ({ params }) => {
 }) as GetServerSideProps<{ data: LIBConfig }>;
 
 export default function Page({ data, links }: { data: LIBConfig; links: Link[] }) {
-	useEffect(() => {
-		data.palette.forEach((color, i) => {
-			document.documentElement.style.setProperty(`--c${i + 1}`, color);
-		});
-
-		// eslint-disable-next-line prefer-destructuring
-		document.body.style.backgroundColor = data.palette[2];
-		document.body.style.overflow = 'auto';
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
 	return (
 		<div className={satoshi.className}>
+			<Head>
+				<title>{data.title}</title>
+				<meta name="description" content={data.description} />
+				<meta name="theme-color" content={data.palette[2]} />
+				<meta property="og:title" content={data.title} />
+				<meta property="og:description" content={data.description} />
+				<meta property="og:image" content={data.image} />
+				{data.image && <link rel="icon" href={data.image} />}
+			</Head>
+
+			<style jsx global>
+				{`
+					:root {
+						--c1: ${data.palette[0]};
+						--c2: ${data.palette[1]};
+						--c3: ${data.palette[2]};
+						--c4: ${data.palette[3]};
+						--c5: ${data.palette[4]};
+					}
+				`}
+			</style>
+
 			<div
 				data-islib
 				className={
@@ -94,15 +105,6 @@ export default function Page({ data, links }: { data: LIBConfig; links: Link[] }
 				}
 				style={{ backgroundColor: data.palette[2] }}
 			>
-				<Head>
-					<title>{data.title}</title>
-					<meta name="description" content={data.description} />
-					<meta name="theme-color" content={data.palette[2]} />
-					<meta property="og:title" content={data.title} />
-					<meta property="og:description" content={data.description} />
-					<meta property="og:image" content={data.image} />
-					{data.image && <link rel="icon" href={data.image} />}
-				</Head>
 				<LIBContent data={data} links={links} />
 			</div>
 		</div>
