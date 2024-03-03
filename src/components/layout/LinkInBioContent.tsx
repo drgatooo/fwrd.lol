@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import type { LIBConfig } from '@/hooks/useLIBConfig';
+import type { LIBLink } from '@/types';
 import Link from 'next/link';
-import type { PartialLink } from '@/types';
 import { socialIcon } from '@/lib/socials';
 
-export function LIBContent({ data, links }: { data: LIBConfig; links: PartialLink[] }) {
+export function LIBContent({ data, links }: { data: LIBConfig; links: LIBLink[] }) {
 	return (
 		<>
 			{data.image && (

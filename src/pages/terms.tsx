@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Markdown from 'react-markdown';
 import { readFile } from 'node:fs/promises';
 
-export default function Terms({ terms }: { terms: string }) {
+export default function TermsPage({ terms }: { terms: string }) {
 	return (
 		<Layout
 			metadata={{

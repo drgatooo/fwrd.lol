@@ -73,7 +73,7 @@ export const getServerSideProps = (async ({ params }) => {
 	};
 }) as GetServerSideProps<{ data: LIBConfig }>;
 
-export default function Page({ data, links }: { data: LIBConfig; links: Link[] }) {
+export default function MyLinkInBio({ data, links }: { data: LIBConfig; links: Link[] }) {
 	return (
 		<div className={satoshi.className}>
 			<Head>

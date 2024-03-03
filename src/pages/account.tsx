@@ -13,7 +13,7 @@ import { useBoolean } from '@/hooks';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-export default function MyAccount({ user }: AccountProps) {
+export default function AccountPage({ user }: AccountProps) {
 	const router = useRouter();
 
 	const [name, setName] = useState(user.name);

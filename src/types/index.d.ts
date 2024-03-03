@@ -1,4 +1,5 @@
 import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next';
+import type { Link } from '@prisma/client';
 
 export interface Metadata {
 	title: string;
@@ -17,9 +18,4 @@ export interface APIReqRes {
 	res: NextApiResponse;
 }
 
-export interface PartialLink {
-	url: string;
-	asSocial: boolean;
-	libLabel: string | null;
-	alias: string;
-}
+export type LIBLink = Pick<Link, 'url' | 'alias' | 'libLabel' | 'asSocial'>;

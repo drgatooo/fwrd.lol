@@ -3,12 +3,12 @@ import { MdLock, MdRocketLaunch } from 'react-icons/md';
 import { isValidAlias, isValidURL } from '@/utils/validators';
 import { useCreateLinkForm } from '@/hooks';
 
-interface ShortenerWizardProps {
+interface LinkCreatorProps {
 	linkCount: number;
 	isPremium: boolean;
 }
 
-export function Shortener({ linkCount, isPremium }: ShortenerWizardProps) {
+export function LinkCreator({ linkCount, isPremium }: LinkCreatorProps) {
 	const { customAlias, description, longUrl, set, submit, submitting } = useCreateLinkForm();
 
 	const isInvalidURL = !!longUrl.length && !isValidURL(longUrl);

@@ -6,7 +6,7 @@ import { useCanvas } from '@/hooks';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useRouter } from 'next/router';
 
-export default function CreateQR() {
+export default function CreateQRPage() {
 	const router = useRouter();
 	const { input } = router.query;
 

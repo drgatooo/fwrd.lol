@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Markdown from 'react-markdown';
 import { readFile } from 'node:fs/promises';
 
-export default function Privacy({ privacy }: { privacy: string }) {
+export default function PrivacyPage({ privacy }: { privacy: string }) {
 	return (
 		<Layout
 			metadata={{

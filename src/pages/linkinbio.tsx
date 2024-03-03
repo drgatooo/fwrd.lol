@@ -1,13 +1,13 @@
 import type { GetServerSideProps } from 'next';
 import type { LIBConfig } from '@/hooks/useLIBConfig';
+import type { LIBLink } from '@/types';
 import { Layout } from '@/components/layout';
-import { LinkInBio } from '@/components/wizards';
-import type { PartialLink } from '@/types';
+import { LinkInBio } from '@/components/linkInBio';
 import { getSession } from '@/utils/auth';
 import palettes from '@/constants/palettes.json';
 import prisma from '@/lib/prisma';
 
-export default function LIB({ config, links }: LIBProps) {
+export default function LinkInBioPage({ config, links }: LIBProps) {
 	return (
 		<Layout
 			metadata={{
@@ -70,5 +70,5 @@ export const getServerSideProps = (async ({ req, res }) => {
 
 interface LIBProps {
 	config: LIBConfig;
-	links: PartialLink[];
+	links: LIBLink[];
 }

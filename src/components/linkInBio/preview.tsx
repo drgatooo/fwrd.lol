@@ -1,8 +1,8 @@
 import type { LIBConfig } from '@/hooks/useLIBConfig';
 import { LIBContent } from '@/components/layout/LinkInBioContent';
-import type { PartialLink } from '@/types';
+import type { LIBLink } from '@/types';
 
-export function LIBPreview({ data, links }: { data: LIBConfig; links: PartialLink[] }) {
+export function LIBPreview({ data, links }: { data: LIBConfig; links: LIBLink[] }) {
 	return (
 		<div className={'flex w-full justify-end'}>
 			<div

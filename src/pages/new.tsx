@@ -1,12 +1,12 @@
 import type { GetServerSideProps } from 'next';
 import { Layout } from '@/components/layout';
+import { LinkCreator } from '@/components/editors';
 import { RelatedLinks } from '@/components/utils';
-import { Shortener } from '@/components/wizards';
 import { UnableToCreateLink } from '@/components/errors';
 import { getSession } from '@/utils/auth';
 import prisma from '@/lib/prisma';
 
-export default function New({ linkCount, isPremium }: NewProps) {
+export default function NewPage({ linkCount, isPremium }: NewProps) {
 	return (
 		<Layout
 			metadata={{
@@ -19,7 +19,7 @@ export default function New({ linkCount, isPremium }: NewProps) {
 			{linkCount >= 30 && !isPremium ? (
 				<UnableToCreateLink />
 			) : (
-				<Shortener isPremium={isPremium} linkCount={linkCount} />
+				<LinkCreator isPremium={isPremium} linkCount={linkCount} />
 			)}
 		</Layout>
 	);

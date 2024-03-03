@@ -1,11 +1,11 @@
-import { DashboardLink } from '../cards';
+import { DashboardLink } from './DashboardLink';
 import type { DashboardProps } from '@/pages/dashboard';
 import { Input } from '../core';
 import { MdSearch } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import { useSearchLinks } from '@/hooks';
 
-export function LinkFinder({ user }: DashboardProps) {
+export function Dashboard({ user }: DashboardProps) {
 	const { links, query, search } = useSearchLinks(user.links);
 	const router = useRouter();
 

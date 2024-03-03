@@ -2,7 +2,7 @@ import { Button } from '@/components/core';
 import type { GetServerSideProps } from 'next';
 import { Layout } from '@/components/layout';
 import type { Link } from '@prisma/client';
-import { LinkEditor } from '@/components/wizards';
+import { LinkEditor } from '@/components/editors';
 import { MdKeyboardBackspace } from 'react-icons/md';
 import { RelatedLinks } from '@/components/utils';
 import { getSession } from '@/utils/auth';

@@ -1,9 +1,9 @@
 import { type LIBConfig, useLIBConfig } from '@/hooks/useLIBConfig';
 import { LIBEditor } from './editor';
+import type { LIBLink } from '@/types';
 import { LIBPreview } from './preview';
-import type { PartialLink } from '@/types';
 
-export function LinkInBio({ initial, links }: { initial: LIBConfig; links: PartialLink[] }) {
+export function LinkInBio({ initial, links }: { initial: LIBConfig; links: LIBLink[] }) {
 	const { set, submit, submitting, hasChanges, ...data } = useLIBConfig(initial);
 
 	return (
