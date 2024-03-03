@@ -1,9 +1,9 @@
-import type { AccessToken, Link } from '@prisma/client';
 import { Button, Input, Progress } from '@/components/core';
+import { MdFileCopy, MdWarning } from 'react-icons/md';
 import type { GetServerSideProps } from 'next';
 import { IoSparkles } from 'react-icons/io5';
 import { Layout } from '@/components/layout';
-import { MdFileCopy } from 'react-icons/md';
+import type { Link } from '@prisma/client';
 import { RelatedLinks } from '@/components/utils';
 import axios from 'axios';
 import { getSession } from '@/utils/auth';
@@ -11,13 +11,15 @@ import prisma from '@/lib/prisma';
 import toast from 'react-hot-toast';
 import { useBoolean } from '@/hooks';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
 export default function AccountPage({ user }: AccountProps) {
+	const { update } = useSession();
 	const router = useRouter();
 
 	const [name, setName] = useState(user.name);
-	const [at, setAt] = useState(user.accessTokens[0]?.accessToken as string | undefined);
+	const [at, setAt] = useState<string | undefined>(undefined);
 	const [loading, { on, off }] = useBoolean(false);
 
 	const fetchAccessToken = () => {
@@ -44,7 +46,7 @@ export default function AccountPage({ user }: AccountProps) {
 			.then(({ data }) => {
 				off();
 				toast.success(data.message, { id });
-				router.reload();
+				void update();
 			})
 			.catch(({ response }) => {
 				off();
@@ -55,11 +57,13 @@ export default function AccountPage({ user }: AccountProps) {
 	const deleteAccount = () => {
 		on();
 
+		const requiredWord = `chau ${user.name}`;
+
 		const prompt = window.prompt(
-			'Escribe "OTINIANO KCHAME" (sin comillas) para confirmar la eliminación de tu cuenta.'
+			`Escribe "${requiredWord}" (sin comillas) para confirmar la eliminación de tu cuenta.`
 		);
 
-		if (prompt !== 'OTINIANO KCHAME') {
+		if (prompt !== requiredWord) {
 			off();
 			return toast.error('¡No se confirmó la eliminación de tu cuenta!');
 		}
@@ -80,6 +84,7 @@ export default function AccountPage({ user }: AccountProps) {
 
 	return (
 		<Layout
+			restricted
 			metadata={{
 				title: 'Mi cuenta',
 				description: 'Administra tu cuenta de usuario.'
@@ -122,34 +127,46 @@ export default function AccountPage({ user }: AccountProps) {
 					</span>{' '}
 					para generar un nuevo token de acceso.
 				</p>
-				<div className={'flex gap-3'}>
+				<div className={'flex flex-col gap-5'}>
 					<Input
 						name={'accesstoken'}
 						label={'Guarda tu token'}
 						disabled
-						value={at ?? 'No creado aún :('}
+						value={
+							at ??
+							(user.hasAccessToken
+								? 'No puedes volver a ver tu token :)'
+								: 'Prueba creando tu primer token')
+						}
 					/>
 
-					<button
-						onClick={() => {
-							if (!loading && at?.length) {
-								navigator.clipboard
-									.writeText(at)
-									.then(() => {
-										toast.success('¡Token copiado al portapapeles!');
-									})
-									.catch(() => {
-										toast.error('¡No se pudo copiar el token al portapapeles!');
-									});
-							}
-						}}
-						disabled={!at?.length}
-						className={
-							'm-2 flex h-auto w-14 items-center justify-center rounded-full text-2xl transition hover:bg-black/20 dark:hover:bg-white/20'
-						}
-					>
-						<MdFileCopy />
-					</button>
+					<div className="flex items-center gap-3">
+						<Button
+							leftIcon={<MdFileCopy />}
+							onClick={() => {
+								if (!loading && at?.length) {
+									navigator.clipboard
+										.writeText(at)
+										.then(() => {
+											toast.success('¡Token copiado al portapapeles!');
+										})
+										.catch(() => {
+											toast.error('¡No se pudo copiar el token al portapapeles!');
+										});
+								}
+							}}
+							disabled={loading || !at?.length}
+							loading={loading}
+						>
+							Copiar
+						</Button>
+						{at?.length && (
+							<p className={'inline-flex items-center gap-1.5 text-sm'}>
+								<MdWarning /> por motivos de seguridad, los tokens solo se pueden ver una vez cuando
+								son creados.
+							</p>
+						)}
+					</div>
 				</div>
 			</div>
 
@@ -199,8 +216,19 @@ export const getServerSideProps = (async ({ req, res }) => {
 		}
 	});
 
+	if (!user) {
+		return { redirect: { destination: '/' } };
+	}
+
 	return {
-		props: { user: JSON.parse(JSON.stringify(user)) }
+		props: {
+			user: {
+				name: user.name,
+				links: JSON.parse(JSON.stringify(user.links)),
+				premium: user.premium,
+				hasAccessToken: user.accessTokens.length > 0
+			}
+		}
 	};
 }) as GetServerSideProps<AccountProps>;
 
@@ -209,6 +237,6 @@ export interface AccountProps {
 		name: string;
 		links: Link[];
 		premium: boolean;
-		accessTokens: AccessToken[];
+		hasAccessToken: boolean;
 	};
 }

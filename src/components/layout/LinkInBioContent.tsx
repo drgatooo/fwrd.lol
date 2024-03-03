@@ -7,6 +7,17 @@ import { socialIcon } from '@/lib/socials';
 export function LIBContent({ data, links }: { data: LIBConfig; links: LIBLink[] }) {
 	return (
 		<>
+			<style jsx global>
+				{`
+					:root {
+						--c1: ${data.palette[0]};
+						--c2: ${data.palette[1]};
+						--c3: ${data.palette[2]};
+						--c4: ${data.palette[3]};
+						--c5: ${data.palette[4]};
+					}
+				`}
+			</style>
 			{data.image && (
 				<Image
 					src={data.image}
@@ -14,6 +25,8 @@ export function LIBContent({ data, links }: { data: LIBConfig; links: LIBLink[] 
 					height={96}
 					className={'aspect-square rounded-full object-cover'}
 					alt={data.title}
+					placeholder={'blur'}
+					blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwAB/7+o9AAAAABJRU5ErkJggg=="
 				/>
 			)}
 			<div className={'flex flex-col items-center gap-1 text-center'}>

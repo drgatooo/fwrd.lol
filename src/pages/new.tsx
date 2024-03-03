@@ -9,6 +9,7 @@ import prisma from '@/lib/prisma';
 export default function NewPage({ linkCount, isPremium }: NewProps) {
 	return (
 		<Layout
+			restricted
 			metadata={{
 				title: 'Nuevo enlace',
 				description: 'Crea un enlace corto para compartirlo con tus amigos.'

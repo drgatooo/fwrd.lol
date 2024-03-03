@@ -24,3 +24,7 @@ body {
 hr {
 	@apply my-2 border-t border-zinc-400 dark:border-zinc-700;
 }
+
+.text-opposite {
+	@apply text-white dark:text-black;
+}

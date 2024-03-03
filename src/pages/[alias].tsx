@@ -86,18 +86,6 @@ export default function MyLinkInBio({ data, links }: { data: LIBConfig; links: L
 				{data.image && <link rel="icon" href={data.image} />}
 			</Head>
 
-			<style jsx global>
-				{`
-					:root {
-						--c1: ${data.palette[0]};
-						--c2: ${data.palette[1]};
-						--c3: ${data.palette[2]};
-						--c4: ${data.palette[3]};
-						--c5: ${data.palette[4]};
-					}
-				`}
-			</style>
-
 			<div
 				data-islib
 				className={

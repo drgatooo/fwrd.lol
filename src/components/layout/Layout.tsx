@@ -7,20 +7,23 @@ import { satoshi } from '@/lib/fonts';
 import { useBoolean } from '@/hooks';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 
 interface LayoutProps {
 	children: React.ReactNode;
 	metadata: Metadata;
+	restricted?: true;
 }
 
-export function Layout({ children, metadata }: LayoutProps) {
+export function Layout({ children, metadata, restricted }: LayoutProps) {
 	const [showing, { on: show }] = useBoolean(false);
 	const router = useRouter();
 
+	//@ts-expect-error q pereza
+	useSession({ required: restricted, onUnauthenticated: () => router.push('/') });
+
 	useEffect(() => {
-		setTimeout(() => {
-			show();
-		}, 50);
+		show();
 	}, [router.asPath, show]);
 
 	return (

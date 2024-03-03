@@ -28,6 +28,7 @@ export default function CreateQRPage() {
 
 	return (
 		<Layout
+			restricted
 			metadata={{
 				title: 'Crear QR',
 				description: 'Crea tu código QR personalizado.'

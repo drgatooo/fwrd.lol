@@ -1,9 +1,10 @@
+import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import type { Link } from '@prisma/client';
 import palettes from '@/constants/palettes.json';
 import toast from 'react-hot-toast';
 import { useBoolean } from '.';
-import { useRouter } from 'next/router';
+import useSWR from 'swr';
 
 export interface LIBConfig {
 	title: string;
@@ -32,20 +33,27 @@ type Field =
 
 export type SetLIBConfig = <K extends Field>(field: K, value: LIBConfig[K]) => void;
 
-export function useLIBConfig(initial: Partial<LIBConfig>) {
-	const router = useRouter();
+export function useLIBConfig() {
+	const { data, isLoading, mutate, error } = useSWR('/api/linkinbio/current', fetcher, {
+		revalidateOnFocus: false,
+		refreshWhenHidden: false,
+		refreshWhenOffline: false
+	});
 
-	const [title, setTitle] = useState(initial.title ?? '');
-	const [description, setDescription] = useState(initial.description ?? '');
-	const [image, setImage] = useState(initial.image ?? '');
-	const [username, setUsername] = useState(initial.username ?? '');
-	const [footer, setFooter] = useState(initial.footer ?? '');
-	const [palette, setPalette] = useState<Palette>((initial.palette ?? palettes.arch) as Palette);
-	const [buttonRound, setButtonRound] = useState<ButtonRound>(initial.buttonRound ?? 'medium');
-	const [buttonStyle, setButtonStyle] = useState<ButtonStyle>(initial.buttonStyle ?? 'fill');
+	const initial = data?.config;
+	const links = data?.links;
+
+	const [title, setTitle] = useState(initial?.title ?? '');
+	const [description, setDescription] = useState(initial?.description ?? '');
+	const [image, setImage] = useState(initial?.image ?? '');
+	const [username, setUsername] = useState(initial?.username ?? '');
+	const [footer, setFooter] = useState(initial?.footer ?? '');
+	const [palette, setPalette] = useState<Palette>((initial?.palette ?? palettes.arch) as Palette);
+	const [buttonRound, setButtonRound] = useState<ButtonRound>(initial?.buttonRound ?? 'medium');
+	const [buttonStyle, setButtonStyle] = useState<ButtonStyle>(initial?.buttonStyle ?? 'fill');
 
 	const hasChanges =
-		initial.title !== title ||
+		initial?.title !== title ||
 		initial.description !== description ||
 		initial.image !== image ||
 		initial.footer !== footer ||
@@ -54,13 +62,20 @@ export function useLIBConfig(initial: Partial<LIBConfig>) {
 		initial.buttonRound !== buttonRound ||
 		initial.buttonStyle !== buttonStyle;
 
-	const [submitting, { off: unsetSubmit, on: setSubmit }] = useBoolean(false);
-
 	useEffect(() => {
-		palette.forEach((color, i) => {
-			document.documentElement.style.setProperty(`--c${i + 1}`, color);
-		});
-	}, [palette]);
+		if (initial) {
+			setTitle(initial.title);
+			setDescription(initial.description);
+			setImage(initial.image);
+			setFooter(initial.footer);
+			setUsername(initial.username);
+			setPalette(initial.palette);
+			setButtonRound(initial.buttonRound);
+			setButtonStyle(initial.buttonStyle);
+		}
+	}, [initial]);
+
+	const [submitting, { off: unsetSubmit, on: setSubmit }] = useBoolean(false);
 
 	function set<K extends Field>(field: K, value: LIBConfig[K]) {
 		switch (field) {
@@ -105,7 +120,7 @@ export function useLIBConfig(initial: Partial<LIBConfig>) {
 				username
 			})
 			.then(({ data }) => ({
-				success: data.message,
+				success: data?.message,
 				error: undefined
 			}))
 			.catch(err => ({
@@ -117,13 +132,13 @@ export function useLIBConfig(initial: Partial<LIBConfig>) {
 
 		if (msg.success) {
 			toast.success('¡Se modificó tu enlace de perfil!');
-			return setTimeout(() => router.reload(), 1000);
+			return void mutate();
 		} else {
 			return toast.error(msg.error);
 		}
 	}
 
-	return {
+	const config = {
 		title,
 		description,
 		image,
@@ -131,10 +146,41 @@ export function useLIBConfig(initial: Partial<LIBConfig>) {
 		username,
 		palette,
 		buttonRound,
-		buttonStyle,
+		buttonStyle
+	};
+
+	return {
+		data: config,
 		set,
 		submit,
 		submitting,
-		hasChanges
+		hasChanges,
+		isLoading,
+		links: links ?? [],
+		error
 	};
+}
+
+async function fetcher(): Promise<FetcherResponse> {
+	try {
+		const {
+			data: { config }
+		} = await axios.get('/api/linkinbio/current');
+		const {
+			data: { links }
+		} = await axios.get('/api/links/all');
+
+		return { config, links };
+	} catch (error) {
+		if (error instanceof AxiosError) {
+			throw new Error(error.response?.data.message ?? 'NO_RESPONSE');
+		}
+
+		throw new Error('NO_RESPONSE');
+	}
+}
+
+interface FetcherResponse {
+	config: LIBConfig;
+	links: Link[];
 }
