@@ -29,6 +29,9 @@ export function Dashboard() {
 					</>
 				)}
 				{!!links && links.map(link => <DashboardLink router={router} key={link.id} link={link} />)}
+				{!links?.length && !isLoading && (
+					<p className={'text-center text-gray-500'}>No hay enlaces</p>
+				)}
 			</div>
 		</>
 	);

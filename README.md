@@ -1,8 +1,92 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# fwrd.lol 🔗
 
-## Getting Started
+An open-source URL shortener, QR code generator, and link-in-bio service. Built with Next.js, Tailwind CSS, and Prisma.
 
-First, run the development server:
+## Getting Started 🚀
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/drgatooo/fwrd.lol.git
+```
+
+2. Install the dependencies:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. Set up the environment variables:
+
+Rename the `.env.example` file to `.env` and fill in the required environment variables. Here is a guide to the environment variables:
+
+#### 📂 Database
+
+By default, the application uses MongoDB, and Prisma as the ORM. You can change the database to any other supported by Prisma.
+
+```prisma
+datasource db {
+    provider = "mongodb" // Change this to your preferred database
+    url      = env("DATABASE_URL")
+}
+```
+
+Update the `DATABASE_URL` `.env` variable with your database connection string.
+
+#### 🔑 Google OAuth
+
+- Create a new project in the [Google API Console](https://console.developers.google.com/).
+
+- Set up OAuth consent screen.
+
+- Create new OAuth client ID credentials, and choose Web application as the application type.
+
+- In Authorized redirect URIs, add `(your url(s) with http(s))/api/auth/callback/google`.
+
+- Copy the client ID and client secret to the `.env` file.
+
+#### 🔒 NextAuth
+
+To create a good value for the `NEXTAUTH_SECRET`, run the following command:
+
+```bash
+openssl rand -base64 32
+```
+
+In `NEXTAUTH_URL`, set the URL of your application (or localhost if you're on development).
+
+```properties
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret
+```
+
+#### 📷 ImgBB API key
+
+- Create an account on [ImgBB](https://imgbb.com/).
+
+- Go to the [API](https://api.imgbb.com/) section and copy the API v1 key.
+
+- Set the `IMGBB_KEY` in the `.env` file.
+
+#### 🔮 Admin Key
+
+Set a custom `ADMIN_KEY` in the `.env` file. This key is used to make POST requests to set Premium users.
+
+#### 🔧 KV Store
+
+- Go to [Vercel](https://vercel.com/), then to your Storage tab.
+
+- Click on KV Durable Redis, then set up all things.
+
+- Copy all the variables in `.env.local` tab to your `.env` file.
+
+- If you will upload the project to Vercel, you don't need to set the KV variable in production, just configure it in the Vercel dashboard.
+
+4. Run the development server:
 
 ```bash
 npm run dev
@@ -10,31 +94,10 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Contributing 🤝
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
