@@ -89,7 +89,7 @@ export default function MyLinkInBio({ data, links }: { data: LIBConfig; links: L
 			<div
 				data-islib
 				className={
-					'relative flex h-screen w-full flex-col items-center gap-5 overflow-y-auto overflow-x-hidden px-8 pt-16'
+					'relative flex h-screen w-full flex-col items-center gap-5 overflow-y-auto overflow-x-hidden px-8 pt-16 mx-auto max-w-lg'
 				}
 				style={{ backgroundColor: data.palette[2] }}
 			>
