@@ -1,0 +1,20 @@
+{
+	"metadata": {
+		"title": "Acorta tus enlaces",
+		"description": "fwrd.lol es una herramienta para compartir enlaces rápidamente."
+	},
+	"hero": {
+		"title": ["Acorta, comparte, ", "impacta"],
+		"p": [
+			"¿Cansado de los aburridos enlaces largos? Con fwrd.lol puedes",
+			"acortar tus enlaces",
+			"crear códigos QR",
+			" y tener un ",
+			"enlace de perfil personalizado"
+		],
+		"buttons": {
+			"dashboard": "Ver mis enlaces",
+			"login": "Acceder con Google"
+		}
+	}
+}

@@ -70,10 +70,11 @@ export default function AccountPage({ user }: AccountProps) {
 
 		const id = toast.loading('Eliminando cuenta...');
 		return axios
-			.delete('/api/user/delete')
-			.then(() => {
+			.delete('/api/user/update')
+			.then(async () => {
 				off();
-				toast.success('¡Cuenta eliminada correctamente!');
+				toast.success('¡Cuenta eliminada correctamente!', { id });
+				await update();
 				void router.push('/');
 			})
 			.catch(({ response }) => {
@@ -191,7 +192,7 @@ export default function AccountPage({ user }: AccountProps) {
 					acción no se puede deshacer.
 				</p>
 
-				<Button onClick={deleteAccount} color={'rose'} leftIcon={<IoSparkles />}>
+				<Button onClick={deleteAccount} color={'rose'} leftIcon={<IoSparkles />} loading={loading}>
 					Eliminar cuenta
 				</Button>
 			</div>

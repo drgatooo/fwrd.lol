@@ -7,6 +7,10 @@ const nextConfig = {
 			{ hostname: 't0.gstatic.com' },
 			{ hostname: 'i.ibb.co' }
 		]
+	},
+	i18n: {
+		locales: ['es-ES', 'en-US'],
+		defaultLocale: 'en-US'
 	}
 };
 

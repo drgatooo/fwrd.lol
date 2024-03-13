@@ -16,11 +16,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 	const user = await authenticate({ req, res });
 	if (!user) return void 0;
 
-	const linkInBio = await prisma.linkInBio.upsert({
+	let linkInBio = await prisma.linkInBio.upsert({
 		where: { userId: user.id },
-		create: { userId: user.id },
+		create: { userId: user.id, title: user.name },
 		update: {}
 	});
 
-	return res.status(200).json({ message: 'Enlaces encontrados', config: linkInBio });
+	if (!linkInBio.title) {
+		linkInBio = await prisma.linkInBio.update({
+			where: { userId: user.id },
+			data: { title: user.name }
+		});
+	}
+
+	if (!linkInBio.username) {
+		let [initialUsername] = user.email.split('@');
+
+		while (await prisma.linkInBio.findFirst({ where: { username: initialUsername } })) {
+			initialUsername += Math.floor(Math.random() * 10);
+		}
+
+		linkInBio = await prisma.linkInBio.update({
+			where: { userId: user.id },
+			data: { title: user.name, username: user.email.split('@')[0] }
+		});
+	}
+
+	return res.status(200).json({ message: 'Configuración actual', config: linkInBio });
 }

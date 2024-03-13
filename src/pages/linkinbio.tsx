@@ -4,6 +4,7 @@ import { LinkInBio } from '@/components/linkInBio';
 export default function LinkInBioPage() {
 	return (
 		<Layout
+			restricted
 			metadata={{
 				title: 'Link en bio',
 				description: 'Crea un enlace corto para compartirlo con tus amigos.'

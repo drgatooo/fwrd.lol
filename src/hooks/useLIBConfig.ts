@@ -43,14 +43,14 @@ export function useLIBConfig() {
 	const initial = data?.config;
 	const links = data?.links;
 
-	const [title, setTitle] = useState(initial?.title ?? '');
-	const [description, setDescription] = useState(initial?.description ?? '');
-	const [image, setImage] = useState(initial?.image ?? '');
-	const [username, setUsername] = useState(initial?.username ?? '');
-	const [footer, setFooter] = useState(initial?.footer ?? '');
-	const [palette, setPalette] = useState<Palette>((initial?.palette ?? palettes.arch) as Palette);
-	const [buttonRound, setButtonRound] = useState<ButtonRound>(initial?.buttonRound ?? 'medium');
-	const [buttonStyle, setButtonStyle] = useState<ButtonStyle>(initial?.buttonStyle ?? 'fill');
+	const [title, setTitle] = useState('');
+	const [description, setDescription] = useState('');
+	const [image, setImage] = useState('');
+	const [username, setUsername] = useState('');
+	const [footer, setFooter] = useState('');
+	const [palette, setPalette] = useState<Palette>(palettes.arch as Palette);
+	const [buttonRound, setButtonRound] = useState<ButtonRound>('medium');
+	const [buttonStyle, setButtonStyle] = useState<ButtonStyle>('fill');
 
 	const hasChanges =
 		initial?.title !== title ||
@@ -62,16 +62,25 @@ export function useLIBConfig() {
 		initial.buttonRound !== buttonRound ||
 		initial.buttonStyle !== buttonStyle;
 
+	const config = {
+		title,
+		description,
+		image,
+		footer,
+		username,
+		palette,
+		buttonRound,
+		buttonStyle
+	};
+
 	useEffect(() => {
 		if (initial) {
-			setTitle(initial.title);
-			setDescription(initial.description);
-			setImage(initial.image);
-			setFooter(initial.footer);
-			setUsername(initial.username);
-			setPalette(initial.palette);
-			setButtonRound(initial.buttonRound);
-			setButtonStyle(initial.buttonStyle);
+			const keys = Object.keys(initial) as Array<keyof LIBConfig>;
+			keys.forEach(key => {
+				if (Array.isArray(initial[key]) ? initial[key].length : initial[key]) {
+					set(key, initial[key]);
+				}
+			});
 		}
 	}, [initial]);
 
@@ -137,17 +146,6 @@ export function useLIBConfig() {
 			return toast.error(msg.error);
 		}
 	}
-
-	const config = {
-		title,
-		description,
-		image,
-		footer,
-		username,
-		palette,
-		buttonRound,
-		buttonStyle
-	};
 
 	return {
 		data: config,

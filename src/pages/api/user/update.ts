@@ -47,9 +47,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 			return res.status(405).json({ message: 'Method Not Allowed' });
 		}
 
-		await prisma.link.deleteMany({ where: { creatorId: user.id } });
-		await prisma.accessToken.deleteMany({ where: { userId: user.id } });
-		await prisma.account.deleteMany({ where: { userId: user.id } });
+		await prisma.linkInBio.delete({ where: { userId: user.id } }).catch(() => void 0);
+		await prisma.user.delete({ where: { id: user.id } });
+
+		return res.status(200).json({ message: 'Usuario eliminado correctamente.' });
 	}
 
 	return res.status(405).json({ message: 'Method Not Allowed' });

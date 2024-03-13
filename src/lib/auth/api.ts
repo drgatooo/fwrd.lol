@@ -12,7 +12,7 @@ export async function getUser({ token, req, res }: GetUserParams) {
 			where: { accessToken: token },
 			select: {
 				user: {
-					select: { id: true, premium: true, name: true }
+					select: { id: true, premium: true, name: true, email: true }
 				}
 			}
 		});
