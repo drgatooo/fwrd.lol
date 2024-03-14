@@ -45,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 			return res.status(400).json({ message: 'El archivo es demasiado grande.' });
 		}
 
-		const imgRes = await uploadImage(image).catch(() => null);
+		const imgRes = await uploadImage(image).catch((err) => console.error(err));
 
 		if (!imgRes) {
 			return res.status(500).json({ message: 'Error al subir la imagen.' });
