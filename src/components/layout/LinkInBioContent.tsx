@@ -34,7 +34,7 @@ export function LIBContent({ data, links }: { data: LIBConfig; links: LIBLink[] 
 				<p>{data.description}</p>
 			</div>
 
-			<div className={'mt-3 flex w-full flex-col gap-3'}>
+			<div className={'mx-auto mt-3 flex w-full max-w-lg flex-col gap-3'}>
 				{links
 					.filter(link => !link.asSocial)
 					.map(link => (
