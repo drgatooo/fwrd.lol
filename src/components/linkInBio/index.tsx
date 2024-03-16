@@ -6,7 +6,6 @@ import { useLIBConfig } from '@/hooks/useLIBConfig';
 
 export function LinkInBio() {
 	const { set, submit, submitting, hasChanges, isLoading, links, error, data } = useLIBConfig();
-	console.log(`has error: ${!!error}`);
 
 	return (
 		<div className={'grid gap-8 md:grid-cols-2'}>

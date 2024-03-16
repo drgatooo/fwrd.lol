@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { convertToValidUsername } from '@/utils/validators';
 import palettes from '@/constants/palettes.json';
 import toast from 'react-hot-toast';
+import { useState } from 'react';
 
 interface LIBEditorProps {
 	data: LIBConfig;
@@ -16,17 +17,22 @@ interface LIBEditorProps {
 }
 
 export function LIBEditor({ data, set, submit, submitting, hasChanges }: LIBEditorProps) {
+	const [fileName, setFileName] = useState<string>('');
+
 	const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-		if (e.target.files?.length) {
-			if (e.target.files[0].size >= 3 * 1024 * 1024) {
-				return toast.error('La imagen no puede pesar más de 3MB');
+		e.preventDefault();
+		if (e.target.files?.length && e.target.value.length) {
+			console.log('holi');
+			setFileName(e.target.value);
+
+			if (e.target.files[0].size >= 2 * 1024 * 1024) {
+				return toast.error('La imagen no puede pesar más de 2MB');
 			}
 
 			const fileReader = new FileReader();
 			fileReader.readAsDataURL(e.target.files[0]);
 
 			fileReader.onload = () => {
-				console.log(fileReader.result);
 				set('image', fileReader.result?.toString() ?? '');
 			};
 
@@ -51,6 +57,7 @@ export function LIBEditor({ data, set, submit, submitting, hasChanges }: LIBEdit
 				name={'username'}
 				value={data.username}
 				onChange={e => set('username', convertToValidUsername(e.target.value))}
+				message={`Tu enlace será: fwrd.lol/@${data.username}`}
 			/>
 
 			<EditorSection label={'Información'}>
@@ -78,13 +85,20 @@ export function LIBEditor({ data, set, submit, submitting, hasChanges }: LIBEdit
 
 				<div className="flex gap-3">
 					<Input
-						label={'Imagen (3 MB)'}
+						label={'Imagen (2 MB)'}
 						name={'image'}
 						type={'file'}
 						accept={'image/png, image/jpeg, image/webp, image/gif'}
 						onChange={handleUpload}
+						value={fileName}
 					/>
-					<Button disabled={!data.image.length} onClick={() => set('image', '')}>
+					<Button
+						disabled={!data.image.length}
+						onClick={() => {
+							set('image', '');
+							setFileName('');
+						}}
+					>
 						Quitar
 					</Button>
 				</div>

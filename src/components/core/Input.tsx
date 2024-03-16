@@ -6,6 +6,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	required?: boolean;
 	rightIcon?: React.ReactNode;
 	containerClassName?: string;
+	ref?: React.Ref<HTMLInputElement>;
 }
 
 export function Input({

@@ -8,6 +8,14 @@ interface Data {
 	message: string;
 }
 
+export const config = {
+	api: {
+		bodyParser: {
+			sizeLimit: '3mb'
+		}
+	}
+};
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
 	const user = await authenticate({ req, res });
 	if (!user) return void 0;
