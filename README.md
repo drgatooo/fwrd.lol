@@ -92,7 +92,7 @@ Set a custom `ADMIN_KEY` in the `.env` file. This key is used to make POST reque
 npx|yarn|pnpm prisma generate
 ```
 
-6. Run the development server:
+5. Run the development server:
 
 ```bash
 npm run dev
