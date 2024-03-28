@@ -86,7 +86,13 @@ Set a custom `ADMIN_KEY` in the `.env` file. This key is used to make POST reque
 
 - If you will upload the project to Vercel, you don't need to set the KV variable in production, just configure it in the Vercel dashboard.
 
-4. Run the development server:
+4. Generate Prisma database
+
+```bash
+npx|yarn|pnpm prisma generate
+```
+
+6. Run the development server:
 
 ```bash
 npm run dev
